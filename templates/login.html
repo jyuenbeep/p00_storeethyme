@@ -1,0 +1,43 @@
+<!--
+Blue Haired Gals With Pronouns: Jasmine Yuen, Talia Hsia, Ziying Jian
+SoftDev
+K19 - Flask app that uses session capabilites to allow user to login and logout
+2022-11-03
+time spent:
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> LOGIN PAGE </title>
+  </head>
+
+  <body>
+    <h1>
+      Welcome, Travelers of the Intertoobz!
+    </h1>
+    Made by Blue Haired Gals w/ Pronouns (Ziying Jian, Talia Hsia, Jasmine Yuen)
+    <h2>
+      REGISTER HERE
+    </h2>
+
+    <h3>
+      Username:
+    </h3>
+    <form action="/login" method = "POST">
+      <input type="text" name="username">
+    <br>
+    <h3>
+      Password:
+    </h3>
+      <input type="text" name="password">
+    <br>
+    <br>
+      <input type="submit" name="sub1" value="Login">
+    </form>
+    <br>
+
+    {{loginMSG}}
+  </body>
+
+</html>
