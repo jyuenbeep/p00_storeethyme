@@ -66,6 +66,9 @@ def login():
             return render_template('login.html', loginMSG="Bad password.")
 
 @app.route("/register", methods=['GET', 'POST'])
+def disp_register():
+    return render_template('register.html')
+
 def addUser(user, passw):
     addUser = f"INSERT INTO users VALUES('{user}', '{passw}');"
     c.execute(addUser)
