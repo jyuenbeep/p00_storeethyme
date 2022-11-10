@@ -6,7 +6,11 @@ We are creating a collaborative storytelling website. In this, users will be all
 
 # How to Launch:
 Remotely:
-- Clone SSH key of repo in terminal
-- Go into that directory within your local files
+- Clone repo in terminal
+`~git clone [https/ssh key]`
+
+- Enter the folder that the file is in with 
+`~cd p00_storeethyme`
+
 - Run the flask app via 
-`~python3 __init__.py`
+`~python3 app.py`
