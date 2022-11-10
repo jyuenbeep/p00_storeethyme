@@ -8,4 +8,5 @@ We are creating a collaborative storytelling website. In this, users will be all
 Remotely:
 - Clone SSH key of repo in terminal
 - Go into that directory within your local files
-- Run the flask app via ~python3 __init__.py
+- Run the flask app via 
+`~python3 __init__.py`
