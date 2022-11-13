@@ -15,5 +15,21 @@ app.secret_key = "23bd2dcea35c795e204d397157f3d55bf1afda7db6519a46f9d1e5a5f02ed4
 
 # HELPER METHODS
 
+# AUTHENTICATE RETURNS:
+# 0 = USERNAME DOES NOT EXIST
+# 1 = PASSWORD IS INCORRECT
+# 2 = GOOD TO GO
 def authenticate(user, passw):
-    c.execute(f"SELECT username FROM users WHERE EXISTS (SELECT {user} from users WHERE password={passw})")
+    c.execute(f"SELECT * FROM users WHERE username='{user}'")
+    accountInfo = c.fetchall()
+    if len(accountInfo)>0:
+        if (accountInfo[0][1]==passw):
+            return 2
+        return 1
+    return 0
+
+# # TEST CASES FOR AUTHENTICATE
+# # right now TABLE users has [hi, bye] as its only row
+# print(authenticate('bye', 'rand')) #should return 0
+# print(authenticate('hi', 'rand')) #should return 1
+# print(authenticate('hi', 'bye')) #should return 2
