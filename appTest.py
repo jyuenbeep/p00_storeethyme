@@ -17,11 +17,11 @@ import sqlite3   #enable control of an sqlite database
 
 DB_FILE="database.db"
 
+# CREATING TABLE <USERS> IN DATABASE.DB (IF IT DOESN'T ALREADY EXIST)
+
 db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
 c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
-
-createUser = "CREATE TABLE if not exists users (username STRING, password STRING);"
-c.execute(createUser)
+c.execute("CREATE TABLE if not exists users (username STRING, password STRING);")
 
 # FLASK
 
@@ -67,12 +67,16 @@ def login():
 
 @app.route("/register", methods=['GET', 'POST'])
 def disp_register():
+    if request.method=='POST':
+        addUser(request.form['username'], request.form['password'])
+        return render_template('login.html')
     return render_template('register.html')
 
+# PUT ACCOUNT INFO INTO DATABASE
 def addUser(user, passw):
     addUser = f"INSERT INTO users VALUES('{user}', '{passw}');"
     c.execute(addUser)
-    db.commit() #save changes
+    db.commit()
 
 @app.route('/logout', methods=['POST'])
 def logout():
