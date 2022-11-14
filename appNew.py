@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS stories (
     id INTEGER, 
     title STRING, 
     thumbnail STRING, 
-    genres STRING[], 
+    genres STRING, 
     caption STRING
     userUpdate STRING
 );
@@ -115,7 +115,7 @@ newForm = """
             <h3> make a caption: </h3>
             <input type='text' name='cap'>
             <br>
-            <input type='submit' name='submitEntry' value='add'>
+            <input type='submit' name='submitEntry' value='new'>
         </form>
     </div>
 """
@@ -153,16 +153,17 @@ def writeToStory(storyID, imageLink, caption, genres, user):
 
 def writeNewStory(title, genres, thumbnail, caption, user):
     global global_storyid
+    #print(c.execute("SELECT * FROM stories"))
     c.execute(f"""
-        INSERT INTO stories VALUES (
-            {global_storyid},
-            {title},
-            {thumbnail},
-            {genres},
-            {caption},
+        INSERT INTO stories (id, title, thumbnail, genres, caption, userUpdate) VALUES (
+            {global_storyid}, 
+            {title}, 
+            {thumbnail}, 
+            {genres}, 
+            {caption}, 
             {user}
-        );
-    """)
+            );
+        """)
     db.commit()
     global_storyid+=1
 
@@ -224,7 +225,7 @@ def add_story():
 @app.route('/new', methods=['GET', 'POST'])
 def new_story():
     if request.method == "POST":
-        writeNewStory(request.form['ttitle'], ["testing3", "testing4"], "TESTING..", request.form['cap'], session['username'])
+        writeNewStory(request.form['ttitle'], 'testing3', 'TESTINGG', request.form['cap'], session['username'])
         return render_template('login.html')
     html_newStory(session['username'])
     return render_template('new.html')
