@@ -7,14 +7,45 @@ import sqlite3
 app = Flask(__name__)
 app.secret_key = "23bd2dcea35c795e204d397157f3d55bf1afda7db6519a46f9d1e5a5f02ed45b"
 
+# OTHER GLOBAL VARIABLES
+
+# keeping a count of how many stories are in the current database (this will act as the story ID)
+storyid = 0
+
 # CREATING DATABASE AND TABLES
 
 db = sqlite3.connect("database.db", check_same_thread=False) 
 c = db.cursor()
-c.execute("CREATE TABLE if not exists users (username STRING, password STRING);")
+c.execute("""
+CREATE TYPE addedTo_object AS OBJECT (
+    storyID INTEGER,
+    title STRING
+);
+CREATE TYPE addedTo_subtable IS TABLE OF addedTo_object;
+CREATE TABLE if not exists users (
+    username STRING, 
+    password STRING,
+    addedTo addedTo_object
+);
+""")
 # use sql join tables to make tables within tables
 # this table within the row will capture already added to stories
-c.execute("CREATE TABLE if not exists stories (id INTEGER, title STRING, thumbnail STRING, genres STRING[]);")
+c.execute("""
+CREATE TYPE updates_object as OBJECT (
+    updateNum INTEGER
+    image STRING,
+    caption STRING,
+    user STRING
+);
+CREATE TYPE updates_subtable IS TABLE OF updates_object;
+CREATE TABLE if not exists stories (
+    id INTEGER, 
+    title STRING, 
+    thumbnail STRING, 
+    genres STRING[], 
+    updateNum INTEGER
+);
+""")
 # use sql join tables to make tables within tables
 # this table within the row will capture story updates
 
@@ -87,17 +118,41 @@ def writeHTML(htmlTemplate, file, pageName, user):
     f.write(htmlTemplate)
     f.close()
 
-def writeAddedStories(database, user):
+def writeAddedStories(user):
 # will go through the ADDED_TO_STORIES column of the specified user in table users in database.db
 # displays all the stories already added to
 
-def writeToStory(database, storyID, user):
+def writeToStory(storyID, image, caption, user):
 # will go through the UPDATES column of the specified story in table stories in database.db
 # INSERT INTO UPDATES WHERE STORIES.ID = STORYID
+    c.execute(f"""
+        INSERT INTO stories.updates WHERE stories.id={storyID} VALUES (
+            update num,
+            {image},
+            {caption},
+            {user}
+        );
+        INSERT INTO users.addedTo WHERE users.username={user} VALUES (
+            {storyID},
+            stories.title WHERE stories.id={storyID}
+        );
+    """)
 
-def writeNewStory(database, title, genres, thumbnail, user):
+def writeNewStory(title, genres, thumbnail, caption, user):
 # INSERT INTO STORIES [all the information]
 # INSERT INTO UPDATES WHERE STORIES.ID = STORYID
+    c.execute(f"""
+        INSERT INTO stories VALUES (
+            {storyid}, 
+            {title}, 
+            {thumbnail}, 
+            updates_subtable(
+                updates_object(0, {thumbnail}, {caption}, {user})
+            )
+        );
+        
+    """)
+    storyid+=1
 
 # FLASK APP ROUTING
 
