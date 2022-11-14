@@ -7,10 +7,18 @@ import sqlite3
 app = Flask(__name__)
 app.secret_key = "23bd2dcea35c795e204d397157f3d55bf1afda7db6519a46f9d1e5a5f02ed45b"
 
-# HELPER METHODS
+# CREATING DATABASE AND TABLES
 
 db = sqlite3.connect("database.db", check_same_thread=False) 
 c = db.cursor()
+c.execute("CREATE TABLE if not exists users (username STRING, password STRING);")
+# use sql join tables to make tables within tables
+# this table within the row will capture already added to stories
+c.execute("CREATE TABLE if not exists stories (id INTEGER, title STRING, thumbnail STRING, genres STRING[]);")
+# use sql join tables to make tables within tables
+# this table within the row will capture story updates
+
+# HELPER METHODS
 
 # AUTHENTICATE RETURNS:
 # 0 = USERNAME DOES NOT EXIST
@@ -38,6 +46,58 @@ def addUser(user, passw):
     # # TESTING
     # c.execute("SELECT * FROM users")
     # print(c.fetchall())
+
+# HELPER METHODS FOR WRITING INTO HTML TEMPLATES
+
+# HTML templates
+headingTemplate = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title> {pageName} </title>
+    </head>
+
+    <body>
+        <h1>
+         STOREETHYME {pageName}
+        </h1>
+        Made by Blue Haired Gals w/ Pronouns (Ziying Jian, Talia Hsia, Jasmine Yuen)
+    
+        <div>
+        <h2>
+            WELCOME {user}
+        </h2>
+        </div>
+    """
+# still need to make a navbar
+
+endTemplate = """
+    </body>
+    </html>
+    """
+
+addedToStories = """
+    <div>
+    """
+
+# writes html to the file
+# will take the name of the html template, the name of the page, and the user in session
+def writeHTML(htmlTemplate, file, pageName, user):
+    f = open(file, 'w')
+    f.write(htmlTemplate)
+    f.close()
+
+def writeAddedStories(database, user):
+# will go through the ADDED_TO_STORIES column of the specified user in table users in database.db
+# displays all the stories already added to
+
+def writeToStory(database, storyID, user):
+# will go through the UPDATES column of the specified story in table stories in database.db
+# INSERT INTO UPDATES WHERE STORIES.ID = STORYID
+
+def writeNewStory(database, title, genres, thumbnail, user):
+# INSERT INTO STORIES [all the information]
+# INSERT INTO UPDATES WHERE STORIES.ID = STORYID
 
 # FLASK APP ROUTING
 
