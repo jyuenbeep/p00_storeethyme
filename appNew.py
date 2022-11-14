@@ -16,6 +16,7 @@ storyid = 0
 
 db = sqlite3.connect("database.db", check_same_thread=False) 
 c = db.cursor()
+
 c.execute("""
 CREATE TYPE addedTo_object AS OBJECT (
     storyID INTEGER,
@@ -96,10 +97,11 @@ headingTemplate = f"""
     
         <div>
         <h2>
-            WELCOME {user}
+            WELCOME {username}
         </h2>
         </div>
     """
+    # htmlTemplate.format(pn=pageName, username=user)
 # still need to make a navbar
 
 endTemplate = """
@@ -107,20 +109,34 @@ endTemplate = """
     </html>
     """
 
-addedToStories = """
+addingForm = """
     <div>
-    """
+        <h2> ADD TO THIS STORY! </h2>
+        <form action="/add" method="POST">
+            <h3> which story? </h3>
+            <input type='text' name='sID'>
+            <br>
+            <h3> make a caption: </h3>
+            <input type='text' name='cap'>
+            <br>
+            <input type='submit' name='submitEntry' value='add'>
+        </form>
+"""
 
 # writes html to the file
 # will take the name of the html template, the name of the page, and the user in session
-def writeHTML(htmlTemplate, file, pageName, user):
+def writeHTML(htmlTemplate, file):
     f = open(file, 'w')
     f.write(htmlTemplate)
     f.close()
 
-def writeAddedStories(user):
-# will go through the ADDED_TO_STORIES column of the specified user in table users in database.db
-# displays all the stories already added to
+def writeAddedStories(story, user):
+    this_html_template = headingTemplate.format(
+        pageName="adding to story",
+        username=user
+    ) + addingForm + endTemplate
+    writeHTML(this_html_template, add.html)
+
 
 def writeToStory(storyID, image, caption, user):
 # will go through the UPDATES column of the specified story in table stories in database.db
