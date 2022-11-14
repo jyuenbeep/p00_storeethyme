@@ -10,51 +10,21 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask import session
+import sqlite3
 
 app = Flask(__name__)
-
-#hard-coded login info
-username = "ziying"
-password = "john"
-
 app.secret_key = "23bd2dcea35c795e204d397157f3d55bf1afda7db6519a46f9d1e5a5f02ed45b"
 
 def authenticate(user, passw):
-    return (user == username and passw == password)
+    c.execute(f"SELECT * FROM users WHERE username='{user}'")
+    accountInfo = c.fetchall()
+    if len(accountInfo)>0:
+        if (accountInfo[0][1]==passw):
+            return 2
+        return 1
+    return 0
 
-@app.route("/", methods=['GET', 'POST'])
-def disp_loginpage():
-    if 'username' in session:
-        #if the user is already logged into the session
-        return render_template('response.html', functional="WORKS!", username=session['username'])
-    return render_template('login.html')
-
-
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    #authenticate login info from form using "request.args"
-    if request.method=="POST": 
-        if authenticate(request.form['username'], request.form['password']):
-            #establishes a session
-            session['username'] = request.form['username']
-            #session['username'] = request.args['username']
-            #bring to new page
-            return render_template('response.html', functional="WORKS!", username=session['username'])
-            #error messages
-        else:
-            if username != request.form['username']:
-                return render_template('login.html', loginMSG="Bad username.")
-            return render_template('login.html', loginMSG="Bad password.")
-
-
-@app.route('/logout', methods=['POST'])
-def logout():
-    # remove the username from the session if it's there
-    if request.method == "POST":
-        session.pop('username', None)
-        return render_template('login.html', loginMSG="Logged out")
-
-
-if __name__ == "__main__":
-    app.debug = True
-    app.run()
+def addUser(user, passw):
+    if authenticate(user, passw)==0:
+        c.execute("INSERT INTO users VALUES (?,?)", (user, passw))
+        db.commit()
