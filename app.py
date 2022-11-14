@@ -28,3 +28,34 @@ def addUser(user, passw):
     if authenticate(user, passw)==0:
         c.execute("INSERT INTO users VALUES (?,?)", (user, passw))
         db.commit()
+
+c.execute("""
+CREATE TYPE addedTo_object AS OBJECT (
+    storyID INTEGER,
+    title STRING
+);
+CREATE TYPE addedTo_subtable IS TABLE OF addedTo_object;
+CREATE TABLE if not exists users (
+    username STRING, 
+    password STRING,
+    addedTo addedTo_object
+);
+""")
+# use sql join tables to make tables within tables
+# this table within the row will capture already added to stories
+c.execute("""
+CREATE TYPE updates_object as OBJECT (
+    updateNum INTEGER
+    image STRING,
+    caption STRING,
+    user STRING
+);
+CREATE TYPE updates_subtable IS TABLE OF updates_object;
+CREATE TABLE if not exists stories (
+    id INTEGER, 
+    title STRING, 
+    thumbnail STRING, 
+    genres STRING[], 
+    updateNum INTEGER
+);
+""")

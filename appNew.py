@@ -150,7 +150,6 @@ def writeNewStory(title, genres, thumbnail, caption, user):
                 updates_object(0, {thumbnail}, {caption}, {user})
             )
         );
-        
     """)
     storyid+=1
 
