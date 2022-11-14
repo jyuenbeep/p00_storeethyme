@@ -7,48 +7,29 @@ import sqlite3
 app = Flask(__name__)
 app.secret_key = "23bd2dcea35c795e204d397157f3d55bf1afda7db6519a46f9d1e5a5f02ed45b"
 
-# OTHER GLOBAL VARIABLES
-
-# keeping a count of how many stories are in the current database (this will act as the story ID)
-storyid = 0
-
 # CREATING DATABASE AND TABLES
 
 db = sqlite3.connect("database.db", check_same_thread=False) 
 c = db.cursor()
 
 c.execute("""
-CREATE TYPE addedTo_object AS OBJECT (
-    storyID INTEGER,
-    title STRING
-);
-CREATE TYPE addedTo_subtable IS TABLE OF addedTo_object;
-CREATE TABLE if not exists users (
+CREATE TABLE IF NOT EXISTS users (
     username STRING, 
-    password STRING,
-    addedTo addedTo_object
-);
+    password STRING
+    );
 """)
 # use sql join tables to make tables within tables
 # this table within the row will capture already added to stories
 c.execute("""
-CREATE TYPE updates_object as OBJECT (
-    updateNum INTEGER
-    image STRING,
-    caption STRING,
-    user STRING
-);
-CREATE TYPE updates_subtable IS TABLE OF updates_object;
-CREATE TABLE if not exists stories (
+CREATE TABLE IF NOT EXISTS stories (
     id INTEGER, 
     title STRING, 
     thumbnail STRING, 
     genres STRING[], 
-    updateNum INTEGER
+    caption STRING
+    userUpdate STRING
 );
 """)
-# use sql join tables to make tables within tables
-# this table within the row will capture story updates
 
 # HELPER METHODS
 
@@ -82,7 +63,7 @@ def addUser(user, passw):
 # HELPER METHODS FOR WRITING INTO HTML TEMPLATES
 
 # HTML templates
-headingTemplate = f"""
+headingTemplate = """
     <!DOCTYPE html>
     <html>
     <head>
@@ -121,52 +102,67 @@ addingForm = """
             <br>
             <input type='submit' name='submitEntry' value='add'>
         </form>
+    </div>
 """
+
+newForm = """
+    <div>
+        <h2> CREATE A NEW STORY! </h2>
+        <form action="/new" method="POST">
+            <h3> title </h3>
+            <input type='text' name='ttitle'>
+            <br>
+            <h3> make a caption: </h3>
+            <input type='text' name='cap'>
+            <br>
+            <input type='submit' name='submitEntry' value='add'>
+        </form>
+    </div>
+"""
+
+# keeping a count of how many stories are in the current database (this will act as the story ID)
+storyid = 0
 
 # writes html to the file
 # will take the name of the html template, the name of the page, and the user in session
 def writeHTML(htmlTemplate, file):
-    f = open(file, 'w')
-    f.write(htmlTemplate)
+    with open("templates/"+file, 'w') as f:
+        f.write(htmlTemplate)
     f.close()
 
-def writeAddedStories(story, user):
-    this_html_template = headingTemplate.format(
-        pageName="adding to story",
-        username=user
-    ) + addingForm + endTemplate
-    writeHTML(this_html_template, add.html)
+def html_AddToStories(user):
+    this_html_template = headingTemplate.format(pageName="adding to story", username=user) + addingForm + endTemplate
+    writeHTML(this_html_template, "add.html")
 
+def html_newStory(user):
+    this_html_template = headingTemplate.format(pageName="creating new story", username=user) + newForm + endTemplate
+    writeHTML(this_html_template, "new.html")
 
-def writeToStory(storyID, image, caption, user):
-# will go through the UPDATES column of the specified story in table stories in database.db
-# INSERT INTO UPDATES WHERE STORIES.ID = STORYID
+def writeToStory(storyID, imageLink, caption, genres, user):
     c.execute(f"""
-        INSERT INTO stories.updates WHERE stories.id={storyID} VALUES (
-            update num,
-            {image},
+        INSERT INTO stories VALUES (
+            {storyID},
+            SELECT title FROM stories WHERE id={storyID},
+            {imageLink},
+            {genres},
+            {caption},
+            {userUpdate}
+        );
+    """)
+    db.commit()
+
+def writeNewStory(title, genres, thumbnail, caption, user):
+    c.execute(f"""
+        INSERT INTO stories VALUES (
+            {storyid},
+            {title},
+            {thumbnail},
+            {genres},
             {caption},
             {user}
         );
-        INSERT INTO users.addedTo WHERE users.username={user} VALUES (
-            {storyID},
-            stories.title WHERE stories.id={storyID}
-        );
     """)
-
-def writeNewStory(title, genres, thumbnail, caption, user):
-# INSERT INTO STORIES [all the information]
-# INSERT INTO UPDATES WHERE STORIES.ID = STORYID
-    c.execute(f"""
-        INSERT INTO stories VALUES (
-            {storyid}, 
-            {title}, 
-            {thumbnail}, 
-            updates_subtable(
-                updates_object(0, {thumbnail}, {caption}, {user})
-            )
-        );
-    """)
+    db.commit()
     storyid+=1
 
 # FLASK APP ROUTING
@@ -215,6 +211,22 @@ def logout():
     if request.method == "POST":
         session.pop('username', None)
         return render_template('login.html', loginMSG="Logged out")
+
+@app.route('/add', methods=['GET', 'POST'])
+def add_story():
+    if request.method == "POST":
+        writeToStory(request.form['sID'], "TESTING", request.form['cap'], ["testing1", "testing2"], session['username'])
+        return render_template('login.html')
+    html_AddToStories(session['username'])
+    return render_template('add.html')    
+
+@app.route('/new', methods=['GET', 'POST'])
+def new_story():
+    if request.method == "POST":
+        writeNewStory(request.form['ttitle'], ["testing3", "testing4"], "TESTING..", request.form['cap'], session['username'])
+        return render_template('login.html')
+    html_newStory(session['username'])
+    return render_template('new.html')
 
 # RUNNNING IT ALL
 

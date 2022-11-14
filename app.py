@@ -59,3 +59,73 @@ CREATE TABLE if not exists stories (
     updateNum INTEGER
 );
 """)
+
+c.execute("""
+CREATE TABLE if not exists users (
+    username STRING, 
+    password STRING,
+);
+""")
+# use sql join tables to make tables within tables
+# this table within the row will capture already added to stories
+c.execute("""
+CREATE TABLE if not exists stories (
+    id INTEGER, 
+    title STRING, 
+    thumbnail STRING, 
+    genres STRING[], 
+    caption STRING
+    userUpdate STRING
+);
+""")
+
+def writeToStory(storyID, imageLink, caption, genres, user):
+# will go through the UPDATES column of the specified story in table stories in database.db
+# INSERT INTO UPDATES WHERE STORIES.ID = STORYID
+    c.execute(f"""
+        INSERT INTO stories VALUES (
+            {storyID},
+            SELECT title FROM stories WHERE id={storyID},
+            {imageLink},
+            {genres},
+            {caption},
+            {userUpdate}
+        );
+    """)
+
+def writeAddToStories(user):
+    this_html_template = headingTemplate.format(
+        pageName="adding to story",
+        username=user
+    ) + addingForm + endTemplate
+    writeHTML(this_html_template, add.html)
+
+addingForm = """
+    <div>
+        <h2> ADD TO THIS STORY! </h2>
+        <form action="/add" method="POST">
+            <h3> which story? </h3>
+            <input type='text' name='sID'>
+            <br>
+            <h3> make a caption: </h3>
+            <input type='text' name='cap'>
+            <br>
+            <input type='submit' name='submitEntry' value='add'>
+        </form>
+"""
+
+def writeNewStory(title, genres, thumbnail, caption, user):
+# INSERT INTO STORIES [all the information]
+# INSERT INTO UPDATES WHERE STORIES.ID = STORYID
+    c.execute(f"""
+        INSERT INTO stories VALUES (
+            {storyid},
+            {title},
+            {thumbnail},
+            {genres},
+            {caption},
+            {user}
+        );
+    """)
+    db.commit()
+    storyid+=1
