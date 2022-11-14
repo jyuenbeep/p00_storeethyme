@@ -121,7 +121,7 @@ newForm = """
 """
 
 # keeping a count of how many stories are in the current database (this will act as the story ID)
-storyid = 0
+global_storyid = int(0)
 
 # writes html to the file
 # will take the name of the html template, the name of the page, and the user in session
@@ -152,9 +152,10 @@ def writeToStory(storyID, imageLink, caption, genres, user):
     db.commit()
 
 def writeNewStory(title, genres, thumbnail, caption, user):
+    global global_storyid
     c.execute(f"""
         INSERT INTO stories VALUES (
-            {storyid},
+            {global_storyid},
             {title},
             {thumbnail},
             {genres},
@@ -163,7 +164,7 @@ def writeNewStory(title, genres, thumbnail, caption, user):
         );
     """)
     db.commit()
-    storyid+=1
+    global_storyid+=1
 
 # FLASK APP ROUTING
 
