@@ -92,6 +92,7 @@ addingForm = """
     </div>
 """
 
+
 newForm = """
     <div>
         <h2> CREATE A NEW STORY! </h2>
