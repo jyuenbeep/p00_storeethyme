@@ -1,32 +1,38 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title> LANDING PAGE </title>
-  </head>
 
-  <body>
-    <h1>
-      STOREETHYME - Collaborative storytelling!
-    </h1>
-    Made by Blue Haired Gals w/ Pronouns (Ziying Jian, Talia Hsia, Jasmine Yuen)
-    <br>
-    <br>
-    <div>
-      <div class = #navabar>
-        <a href="/">Profile</a>
-        <a href="/add">Add to an existing story!</a>
-        <a href="/new">Create a new story!</a>
-      </div>
-      <h2>
-        WELCOME, {{user}}!
-      </h2>
-      <h3>
-        The stories you have already added to:
-      </h3>
-      <form action='/logout' method = "POST">
-      <button type="submit">Logout</button>
-  </form>
-    </div>
-  </body>
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title> PROFILE </title>
+    </head>
 
-</html>
+    <body>
+        Made by Blue Haired Gals w/ Pronouns (Ziying Jian, Talia Hsia, Jasmine Yuen)
+
+        <div>
+        <h1>
+            WELCOME, ziying!
+        </h1>
+        </div>
+        <div class = #navabar>
+            <a href="/">Profile</a>
+            <a href="/add">Add to an existing story!</a>
+            <a href="/new">Create a new story!</a>
+        </div>
+    
+<div>
+    <h3>
+    The stories you have already added to:
+    </h3>
+    
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>TITLE</th>
+                <th>GENRE</th>
+                <th>ENTRY</th>
+            </tr>
+    <tr><td>0</td><td>I LOVE CATS!!!</td><td>I LOOOOOOVE CATS TOO!</td><td>Auto-biography</td></tr><tr><td>0</td><td>I LOVE CATS!!!</td><td>I LOOOOOOVE CATS TOO!</td><td>Auto-biography</td></tr></table>
+    <form action='/logout' method = "POST">
+        <button type="submit">Logout</button>
+    </form>
+</div>

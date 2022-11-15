@@ -23,7 +23,6 @@ c.execute("""
 CREATE TABLE IF NOT EXISTS stories (
     story_id INTEGER,
     title STRING,
-    thumbnail STRING,
     genres STRING,
     caption STRING,
     user STRING
@@ -55,7 +54,7 @@ def story_unadded_to(user, storyid):
     output = c.fetchall()
     if len(output)==0:
         return 0
-    if output[0][5]==user:
+    if output[0][4]==user:
         return 1
 
 # TEMPLATES --------------------------------------------------------------------------------------------
@@ -75,18 +74,17 @@ headingTemplate = """
             WELCOME, {username}!
         </h1>
         </div>
+        <div class = #navabar>
+            <a href="/">Profile</a>
+            <a href="/add">Add to an existing story!</a>
+            <a href="/new">Create a new story!</a>
+        </div>
     """
 
 endTemplate = """
-<br>
-<div class = #navabar>
-<a href="/">Profile</a>
-<a href="/add">Add to an existing story!</a>
-<a href="/new">Create a new story!</a>
-</div>
     </body>
     </html>
-    """
+"""
 
 addingForm = """
     <div>
@@ -95,13 +93,26 @@ addingForm = """
             <h3> Provide the story's unique story ID: </h3>
             <input type='text' name='storyid_query'>
             <br>
+            <br>
             <h3> Input your awesome one-liner: </h3>
             <input type='text' name='caption_query'>
             <br>
             <br>
+            <h3> Genre??? </h3>
+            <input type='text' name='genre_query'>
+            <br>
             <input type='submit' name='submitEntry' value='add'>
             <br>
             {message}
+        </form>
+        <br>
+        <form action="/viewRecent" method="POST">
+            <h3> view this story's recent update </h3>
+            <input type='text' name='storyid_query2'>
+            <br>
+            <input type='submit' name='view' value='view'>
+            <br>
+            {message2}
         </form>
     </div>
 """
@@ -117,11 +128,41 @@ newForm = """
             <input type='paragraph' name='caption_query'>
             <br>
             <br>
+            <h3> Genre?? </h3>
+            <input type='text' name='genre_query'>
+            <br>
             <input type='submit' name='submitEntry' value='new'>
             <br>
             {message}
         </form>
     </div>
+"""
+
+landingPage_skeleton = """
+<div>
+    <h3>
+    The stories you have already added to:
+    </h3>
+    {viewStories_code}
+    <form action='/logout' method = "POST">
+        <button type="submit">Logout</button>
+    </form>
+</div>
+"""
+
+view_recent = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title> {storyid} recent update </title>
+    </head>
+    <body>
+        <h1>STORY ID: {storyid}</h1>
+        <h1>TITLE: {title}</h1>
+        <h2>{caption}</h2>
+        <button><a href="/add">go back</a></button>
+    </body>
+    </html>
 """
 
 # HTML BUILDING HELPER METHODS ---------------------------------------------------------------------------------
@@ -131,22 +172,63 @@ def writeHTML(htmlTemplate, file):
         f.write(htmlTemplate)
     f.close()
 
-def html_AddToStories(user, addingForm_message):
-    this_html_template = headingTemplate.format(pageName="Add on to a story!", username=user) + addingForm.format(message=addingForm_message) + endTemplate
+def html_AddToStories(user, addingForm_message, addingMessage2):
+    this_html_template = headingTemplate.format(pageName="Add on to a story!", username=user) 
+    
+    html_string = """
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>TITLE</th>
+                <th>GENRE</th>
+            </tr>
+    """
+    c.execute(f"SELECT * FROM stories WHERE user!='{user}'")
+    ary_stories = c.fetchall()
+    print(ary_stories)
+    for i in range(len(ary_stories)):
+        html_string += "<tr>"
+        for y in range(len(ary_stories[i])-2):
+            html_string += "<td>" + str(ary_stories[i][y]) + "</td>"
+        html_string += "</tr>"
+    html_string += "</table>"
+    this_html_template += html_string
+    this_html_template += addingForm.format(message=addingForm_message, message2=addingMessage2) + endTemplate
     writeHTML(this_html_template, "add.html")
 
 def html_newStory(user, newForm_message):
     this_html_template = headingTemplate.format(pageName="Create a new story!", username=user) + newForm.format(message=newForm_message) + endTemplate
     writeHTML(this_html_template, "new.html")
 
-def writeToStory(id_input, img_link, genre, cap, user_sesh):
+def html_viewStories(user):
+    html_string = """
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>TITLE</th>
+                <th>GENRE</th>
+                <th>ENTRY</th>
+            </tr>
+    """
+    c.execute(f"SELECT * FROM stories WHERE user='{user}'")
+    ary_stories = c.fetchall()
+    for i in range(len(ary_stories)):
+        html_string += "<tr>"
+        for y in range(len(ary_stories[i])-1):
+            html_string += "<td>" + str(ary_stories[i][y]) + "</td>"
+        html_string += "</tr>"
+    html_string += "</table>"
+    
+    this_html_template = headingTemplate.format(pageName="PROFILE", username=user) + landingPage_skeleton.format(viewStories_code=html_string)
+    writeHTML(this_html_template, "landing.html")
+
+def writeToStory(id_input, genre, cap, user_sesh):
     c.execute(f"SELECT title FROM stories WHERE story_id={id_input}")
     title_get = c.fetchone()
     c.execute(f"""
         INSERT INTO stories VALUES (
             {id_input},
             \"{title_get[0]}\",
-            \"{img_link}\",
             \"{genre}\",
             \"{cap}\",
             '{user_sesh}'
@@ -154,13 +236,12 @@ def writeToStory(id_input, img_link, genre, cap, user_sesh):
     """)
     db.commit()
 
-def writeNewStory(title_input, img_link, genre, cap, user_sesh):
+def writeNewStory(title_input, genre, cap, user_sesh):
     global global_storyid
     c.execute(f"""
         INSERT INTO stories VALUES (
             {global_storyid},
             \"{title_input}\",
-            \"{img_link}\",
             \"{genre}\",
             \"{cap}\",
             '{user_sesh}'
@@ -169,11 +250,19 @@ def writeNewStory(title_input, img_link, genre, cap, user_sesh):
     db.commit()
     global_storyid+=1
 
+def html_viewRecent(id):
+    c.execute(f"SELECT * FROM stories WHERE story_id={id}")
+    store = c.fetchall()
+    recent = store[len(store)-1]
+    this_html_template = view_recent.format(storyid=id, title=recent[1], caption=recent[4])
+    writeHTML(this_html_template, "viewRecent.html")
+
 # FLASK APP ROUTING --------------------------------------------------------------------------------------
 
 @app.route("/", methods=['GET', 'POST'])
 def disp_loginpage():
     if 'username' in session:
+        html_viewStories(session['username'])
         return render_template('landing.html', user=session['username'])
     return render_template('login.html')
 
@@ -215,26 +304,38 @@ def logout():
 @app.route('/add', methods=['GET', 'POST'])
 def add_story():
     if request.method == "POST":
-        if request.form['storyid_query']=="" or request.form['caption_query']=="":
-            html_AddToStories(session['username'], "please fill in both queries")
+        if request.form['storyid_query']=="" or request.form['caption_query']=="" or request.form['genre_query']=="":
+            html_AddToStories(session['username'], "please fill in all queries", "")
         elif story_unadded_to(session['username'], request.form['storyid_query'])==0:
-            html_AddToStories(session['username'], "this story id does not exist")
+            html_AddToStories(session['username'], "this story id does not exist", "")
         elif story_unadded_to(session['username'], request.form['storyid_query'])==1:
-            html_AddToStories(session['username'], "you have already added to this story and cannot add again")
+            html_AddToStories(session['username'], "you have already added to this story and cannot add again", "")
         else:
-            writeToStory(request.form['storyid_query'], "image", request.form['caption_query'], "genre", session['username'])
+            writeToStory(request.form['storyid_query'], request.form['caption_query'], request.form['genre_query'], session['username'])
             return render_template('landing.html', user=session['username'])
     else:
-        html_AddToStories(session['username'], "")
+        html_AddToStories(session['username'], "", "")
+    return render_template('add.html')
+
+@app.route('/viewRecent', methods=['GET', 'POST'])
+def story_profile():
+    if request.method == "POST":
+        if request.form['storyid_query2']!="":
+            c.execute(f"SELECT * FROM stories WHERE story_id={request.form['storyid_query2']}")
+            store = c.fetchall()
+            if len(store)!=0:    
+                html_viewRecent(request.form['storyid_query2'])
+                return render_template("viewRecent.html")
+            html_AddToStories(session['username'], "", "please insert a valid story id")
     return render_template('add.html')
 
 @app.route('/new', methods=['GET', 'POST'])
 def new_story():
     if request.method == "POST":
-        if request.form['title_query']=="" or request.form['caption_query']=="":
-            html_newStory(session['username'], "please fill in both queries")
+        if request.form['title_query']=="" or request.form['caption_query']=="" or request.form['genre_query']=="":
+            html_newStory(session['username'], "please fill in all queries")
         else:
-            writeNewStory(request.form['title_query'], "testing image", "testing genre", request.form['caption_query'], session['username'])
+            writeNewStory(request.form['title_query'], request.form['genre_query'], request.form['caption_query'], session['username'])
             return render_template('landing.html', user=session['username'])
     else:
         html_newStory(session['username'], "")

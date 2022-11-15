@@ -10,32 +10,50 @@
 
         <div>
         <h1>
-            WELCOME, risson!
+            WELCOME, ziying!
         </h1>
         </div>
+        <div class = #navabar>
+            <a href="/">Profile</a>
+            <a href="/add">Add to an existing story!</a>
+            <a href="/new">Create a new story!</a>
+        </div>
     
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>TITLE</th>
+                <th>GENRE</th>
+            </tr>
+    <tr><td>0</td><td>I LOVE CATS!!!</td><td>Auto-biography</td></tr><tr><td>1</td><td>I LOVE CATS!!!</td><td>Auto-biography</td></tr></table>
     <div>
         <h2> ADD TO A STORY! </h2>
         <form action="/add" method="POST">
             <h3> Provide the story's unique story ID: </h3>
             <input type='text' name='storyid_query'>
             <br>
+            <br>
             <h3> Input your awesome one-liner: </h3>
             <input type='text' name='caption_query'>
             <br>
+            <br>
+            <h3> Genre??? </h3>
+            <input type='text' name='genre_query'>
             <br>
             <input type='submit' name='submitEntry' value='add'>
             <br>
             
         </form>
+        <br>
+        <form action="/viewRecent" method="POST">
+            <h3> view this story's recent update </h3>
+            <input type='text' name='storyid_query2'>
+            <br>
+            <input type='submit' name='view' value='view'>
+            <br>
+            
+        </form>
     </div>
 
-<br>
-<div class = #navabar>
-<a href="/">Profile</a>
-<a href="/add">Add to an existing story!</a>
-<a href="/new">Create a new story!</a>
-</div>
     </body>
     </html>
-    
