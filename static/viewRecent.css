@@ -10,3 +10,7 @@
     background-color: #368a4e;
 }
 
+a:visited a:hover {
+    text-decoration: none;
+}
+

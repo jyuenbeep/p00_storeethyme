@@ -25,3 +25,7 @@
 #logmsg{
     font-family: sans-serif;
 }
+
+a:visited a:hover {
+    text-decoration: none;
+}

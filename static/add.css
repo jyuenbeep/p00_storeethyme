@@ -11,6 +11,7 @@
 }
 
 #navabar{
+
     font-family: sans-serif;
 }
 
@@ -24,6 +25,10 @@
 
 .h3{
     font-family: sans-serif;
+}
+
+a:visited a:hover {
+    text-decoration: none;
 }
 
 

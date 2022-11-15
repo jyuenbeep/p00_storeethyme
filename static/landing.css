@@ -26,4 +26,7 @@
     font-family: sans-serif;
 }
 
+.navabar > a:visited{
+    text-decoration: none;
+}
 

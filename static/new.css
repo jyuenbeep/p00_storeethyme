@@ -2,32 +2,56 @@
     background-color: #b6dec1;
 }
 
-.body{
+body{
     background-color: #b6dec1;
-}
-
-.header{
     font-family: sans-serif;
 }
 
-#navabar{
-    font-family: sans-serif;
+h2 {
+    color: #334195;
 }
 
-.form{
-    font-family: sans-serif;
+.button{
+    background-color: #B8B3E9;
+    border: 0px solid;
 }
 
-.h2{
-    font-family: sans-serif;
+.button:hover
+{
+  background-color: #55505C;
+  color:bisque;
+}
+  
+.navabar{
+    display:flex;
+    justify-content: space-between;
+    padding-left: 20vh;
+    padding-right: 20vh;
+    background-color: #334195;
+    font-size: large;
 }
 
-.h3{
-    font-family: sans-serif;
+.navabar > a{
+    color: beige;
+    text-decoration: none;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
-#button{
-    font-family: sans-serif;
-    background-color: #368a4e;
+.navabar > a:hover{
+    color:#F7C548;
+    background-color: black;
+}
+
+div {
+    align-items: center;
+    text-align: center;
+}
+
+input {
+    height: 40px;
+    width: 70vh;
 }
 

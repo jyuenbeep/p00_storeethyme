@@ -75,7 +75,7 @@ headingTemplate = """
             WELCOME, {username}!
         </h1>
         </div>
-        <div class = #navabar>
+        <div class = "navabar">
             <a href="/">Profile</a>
             <a href="/add">Add to an existing story!</a>
             <a href="/new">Create a new story!</a>
@@ -132,7 +132,9 @@ newForm = """
             <h3> Genre?? </h3>
             <input type='text' name='genre_query'>
             <br>
+            <br>
             <input type='submit' name='submitEntry' value='new' class = "button">
+            <br>
             <br>
             {message}
         </form>
