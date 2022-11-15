@@ -67,11 +67,11 @@ headingTemplate = """
     <link rel="stylesheet" type = "text/css" href="../static/{pageName}.css">
     </head>
 
-    <body>
+    <body class = "{pageName}">
         Made by Blue Haired Gals w/ Pronouns (Ziying Jian, Talia Hsia, Jasmine Yuen)
 
         <div>
-        <h1>
+        <h1 id = "welcome">
             WELCOME, {username}!
         </h1>
         </div>
@@ -89,8 +89,8 @@ endTemplate = """
 
 addingForm = """
     <div>
-        <h2> ADD TO A STORY! </h2>
-        <form action="/add" method="POST">
+        <h2 id = "header"> ADD TO A STORY! </h2>
+        <form action="/add" method="POST" class = "formAdd">
             <h3> Provide the story's unique story ID: </h3>
             <input type='text' name='storyid_query'>
             <br>
@@ -107,11 +107,11 @@ addingForm = """
             {message}
         </form>
         <br>
-        <form action="/viewRecent" method="POST">
+        <form action="/viewRecent" method="POST" class= "formView">
             <h3> view this story's recent update </h3>
             <input type='text' name='storyid_query2'>
             <br>
-            <input type='submit' name='view' value='view'>
+            <input type='submit' name='view' value='view' class = "button">
             <br>
             {message2}
         </form>
@@ -121,7 +121,7 @@ addingForm = """
 newForm = """
     <div>
         <h2> CREATE A NEW STORY! </h2>
-        <form action="/new" method="POST">
+        <form action="/new" method="POST" class = "form">
             <h3> Input your *dazzling* title: </h3>
             <input type='text' name='title_query'>
             <br>
@@ -132,7 +132,7 @@ newForm = """
             <h3> Genre?? </h3>
             <input type='text' name='genre_query'>
             <br>
-            <input type='submit' name='submitEntry' value='new'>
+            <input type='submit' name='submitEntry' value='new' class = "button">
             <br>
             {message}
         </form>
@@ -145,7 +145,7 @@ landingPage_skeleton = """
     The stories you have already added to:
     </h3>
     {viewStories_code}
-    <form action='/logout' method = "POST">
+    <form action='/logout' method = "POST" class = "button">
         <button type="submit">Logout</button>
     </form>
 </div>
@@ -174,7 +174,7 @@ def writeHTML(htmlTemplate, file):
     f.close()
 
 def html_AddToStories(user, addingForm_message, addingMessage2):
-    this_html_template = headingTemplate.format(pageName="Add on to a story!", username=user)
+    this_html_template = headingTemplate.format(pageName="add", username=user)
 
     html_string = """
         <table>
@@ -198,7 +198,7 @@ def html_AddToStories(user, addingForm_message, addingMessage2):
     writeHTML(this_html_template, "add.html")
 
 def html_newStory(user, newForm_message):
-    this_html_template = headingTemplate.format(pageName="Create a new story!", username=user) + newForm.format(message=newForm_message) + endTemplate
+    this_html_template = headingTemplate.format(pageName="new", username=user) + newForm.format(message=newForm_message) + endTemplate
     writeHTML(this_html_template, "new.html")
 
 def html_viewStories(user):
@@ -220,7 +220,7 @@ def html_viewStories(user):
         html_string += "</tr>"
     html_string += "</table>"
 
-    this_html_template = headingTemplate.format(pageName="PROFILE", username=user) + landingPage_skeleton.format(viewStories_code=html_string)
+    this_html_template = headingTemplate.format(pageName="landing", username=user) + landingPage_skeleton.format(viewStories_code=html_string)
     writeHTML(this_html_template, "landing.html")
 
 def writeToStory(id_input, genre, cap, user_sesh):

@@ -2,16 +2,16 @@
     <!DOCTYPE html>
     <html>
     <head>
-    <title> Add on to a story! </title>
-    <link rel="stylesheet" type = "text/css" href="../static/Add on to a story!.css">
+    <title> add </title>
+    <link rel="stylesheet" type = "text/css" href="../static/add.css">
     </head>
 
-    <body>
+    <body class = "add">
         Made by Blue Haired Gals w/ Pronouns (Ziying Jian, Talia Hsia, Jasmine Yuen)
 
         <div>
-        <h1>
-            WELCOME, hello!
+        <h1 id = "welcome">
+            WELCOME, talia!
         </h1>
         </div>
         <div class = #navabar>
@@ -26,10 +26,10 @@
                 <th>TITLE</th>
                 <th>GENRE</th>
             </tr>
-    <tr><td>0</td><td>new story</td><td>whooo</td></tr><tr><td>1</td><td>moo</td><td>ree</td></tr></table>
+    </table>
     <div>
-        <h2> ADD TO A STORY! </h2>
-        <form action="/add" method="POST">
+        <h2 id = "header"> ADD TO A STORY! </h2>
+        <form action="/add" method="POST" class = "formAdd">
             <h3> Provide the story's unique story ID: </h3>
             <input type='text' name='storyid_query'>
             <br>
@@ -46,11 +46,11 @@
             
         </form>
         <br>
-        <form action="/viewRecent" method="POST">
+        <form action="/viewRecent" method="POST" class= "formView">
             <h3> view this story's recent update </h3>
             <input type='text' name='storyid_query2'>
             <br>
-            <input type='submit' name='view' value='view'>
+            <input type='submit' name='view' value='view' class = "button">
             <br>
             
         </form>
