@@ -52,10 +52,7 @@ def authenticate(user, passw):
 # print(authenticate('hi', 'rand')) #should return 1
 # print(authenticate('hi', 'bye')) #should return 2
 
-def addUser(user, passw):
-    if authenticate(user, passw)==0:
-        c.execute("INSERT INTO users VALUES (?,?)", (user, passw))
-        db.commit()
+c
     # # TESTING
     # c.execute("SELECT * FROM users")
     # print(c.fetchall())
