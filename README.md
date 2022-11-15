@@ -13,10 +13,13 @@ We are creating a collaborative storytelling website. In this, users will be all
 
 Launch Remotely:
 - Clone repo in terminal
-`~git clone [https/ssh key]`
+`$ git clone [https/ssh key]`
 
 - Enter the folder that the file is in with 
-`~cd p00_storeethyme`
+`$ cd p00_storeethyme`
+
+- Install these requirements first
+`$ pip install -r requirements.txt`
 
 - Run the flask app via 
-`~python3 __init__.py`
+`$ python3 __init__.py`
