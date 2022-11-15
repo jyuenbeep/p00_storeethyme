@@ -88,5 +88,9 @@ file upload
 taliaH -- 2022-11-15 4:40
 flask updates + debugging (db disk image malformed)
 
-taliaH -- 2022-11-15 5:08
+taliaH -- 2022-11-15 5:03
 readme and devlog updates
+
+taliaH -- 2022-11-15 5:08
+more readme updates
+
