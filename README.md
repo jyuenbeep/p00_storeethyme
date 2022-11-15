@@ -7,7 +7,6 @@ We are creating a collaborative storytelling website. In this, users will be all
 
 ## Pre-required installments:
 - Python
-- Flask
 - sqlite
 
 ## How to Launch/Run:
