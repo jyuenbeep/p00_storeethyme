@@ -51,9 +51,12 @@ def addUser(user, passw):
         db.commit()
 
 def story_unadded_to(user, storyid):
-    c.execute(f"SELECT * FROM stories WHERE story_id={storyid} AND user='{user}'")
+    c.execute(f"SELECT * FROM stories WHERE story_id={storyid}")
     output = c.fetchall()
-    return (len(output)==0)
+    if len(output)==0:
+        return 0
+    if output[0][5]==user:
+        return 1
 
 # TEMPLATES --------------------------------------------------------------------------------------------
 
@@ -72,7 +75,7 @@ headingTemplate = """
 
         <div>
         <h2>
-            WELCOME, {username}.
+            WELCOME {username}
         </h2>
         </div>
     """
@@ -204,14 +207,17 @@ def logout():
 @app.route('/add', methods=['GET', 'POST'])
 def add_story():
     if request.method == "POST":
-        if story_unadded_to(session['username'], request.form['storyid_query']):
+        if request.form['storyid_query']=="" or request.form['caption_query']=="":
+            html_AddToStories(session['username'], "please fill in both queries")
+        elif story_unadded_to(session['username'], request.form['storyid_query'])==0:
+            html_AddToStories(session['username'], "this story id does not exist")
+        elif story_unadded_to(session['username'], request.form['storyid_query'])==1:
+            html_AddToStories(session['username'], "you have already added to this story and cannot add again")
+        else:
             writeToStory(request.form['storyid_query'], "image", request.form['caption_query'], "genre", session['username'])
-            return render_template('landing.html')
-
-        html_AddToStories(session['username'], "you have already added to this story and cannot add again")
-        return render_template('add.html')
-
-    html_AddToStories(session['username'], "")
+            return render_template('landing.html', username=session['username'])
+    else:
+        html_AddToStories(session['username'], "")
     return render_template('add.html')
 
 @app.route('/new', methods=['GET', 'POST'])
