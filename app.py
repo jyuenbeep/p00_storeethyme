@@ -173,8 +173,8 @@ def writeHTML(htmlTemplate, file):
     f.close()
 
 def html_AddToStories(user, addingForm_message, addingMessage2):
-    this_html_template = headingTemplate.format(pageName="Add on to a story!", username=user) 
-    
+    this_html_template = headingTemplate.format(pageName="Add on to a story!", username=user)
+
     html_string = """
         <table>
             <tr>
@@ -206,8 +206,8 @@ def html_viewStories(user):
             <tr>
                 <th>ID</th>
                 <th>TITLE</th>
-                <th>GENRE</th>
                 <th>ENTRY</th>
+                <th>GENRE</th>
             </tr>
     """
     c.execute(f"SELECT * FROM stories WHERE user='{user}'")
@@ -218,7 +218,7 @@ def html_viewStories(user):
             html_string += "<td>" + str(ary_stories[i][y]) + "</td>"
         html_string += "</tr>"
     html_string += "</table>"
-    
+
     this_html_template = headingTemplate.format(pageName="PROFILE", username=user) + landingPage_skeleton.format(viewStories_code=html_string)
     writeHTML(this_html_template, "landing.html")
 
@@ -254,7 +254,7 @@ def html_viewRecent(id):
     c.execute(f"SELECT * FROM stories WHERE story_id={id}")
     store = c.fetchall()
     recent = store[len(store)-1]
-    this_html_template = view_recent.format(storyid=id, title=recent[1], caption=recent[4])
+    this_html_template = view_recent.format(storyid=id, title=recent[1], caption=recent[3])
     writeHTML(this_html_template, "viewRecent.html")
 
 # FLASK APP ROUTING --------------------------------------------------------------------------------------
@@ -311,7 +311,7 @@ def add_story():
         elif story_unadded_to(session['username'], request.form['storyid_query'])==1:
             html_AddToStories(session['username'], "you have already added to this story and cannot add again", "")
         else:
-            writeToStory(request.form['storyid_query'], request.form['caption_query'], request.form['genre_query'], session['username'])
+            writeToStory(request.form['storyid_query'], request.form['genre_query'], request.form['cap_query'], session['username'])
             return render_template('landing.html', user=session['username'])
     else:
         html_AddToStories(session['username'], "", "")
@@ -323,17 +323,17 @@ def story_profile():
         if request.form['storyid_query2']!="":
             c.execute(f"SELECT * FROM stories WHERE story_id={request.form['storyid_query2']}")
             store = c.fetchall()
-            if len(store)!=0:    
+            if len(store)!=0:
                 html_viewRecent(request.form['storyid_query2'])
                 return render_template("viewRecent.html")
-            html_AddToStories(session['username'], "", "please insert a valid story id")
+            html_AddToStories(session['username'], "", "Please insert a valid story id")
     return render_template('add.html')
 
 @app.route('/new', methods=['GET', 'POST'])
 def new_story():
     if request.method == "POST":
         if request.form['title_query']=="" or request.form['caption_query']=="" or request.form['genre_query']=="":
-            html_newStory(session['username'], "please fill in all queries")
+            html_newStory(session['username'], "Please fill in all queries")
         else:
             writeNewStory(request.form['title_query'], request.form['genre_query'], request.form['caption_query'], session['username'])
             return render_template('landing.html', user=session['username'])
