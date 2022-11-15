@@ -7,24 +7,24 @@ import sqlite3
 app = Flask(__name__)
 app.secret_key = "23bd2dcea35c795e204d397157f3d55bf1afda7db6519a46f9d1e5a5f02ed45b"
 
-db = sqlite3.connect("database.db", check_same_thread=False) 
+db = sqlite3.connect("database.db", check_same_thread=False)
 c = db.cursor()
 
 # MAKING TABLES -------------------------------------------
 
 c.execute("""
 CREATE TABLE IF NOT EXISTS users (
-    username STRING, 
+    username STRING,
     password STRING
     );
 """)
 
 c.execute("""
 CREATE TABLE IF NOT EXISTS stories (
-    story_id INTEGER, 
-    title STRING, 
-    thumbnail STRING, 
-    genres STRING, 
+    story_id INTEGER,
+    title STRING,
+    thumbnail STRING,
+    genres STRING,
     caption STRING,
     user STRING
 );
@@ -64,7 +64,7 @@ headingTemplate = """
          STOREETHYME {pageName}
         </h1>
         Made by Blue Haired Gals w/ Pronouns (Ziying Jian, Talia Hsia, Jasmine Yuen)
-    
+
         <div>
         <h2>
             WELCOME {username}
@@ -81,10 +81,10 @@ addingForm = """
     <div>
         <h2> ADD TO THIS STORY! </h2>
         <form action="/add" method="POST">
-            <h3> which story? </h3>
+            <h3> Which story? </h3>
             <input type='text' name='sID'>
             <br>
-            <h3> make a caption: </h3>
+            <h3> Make a caption: </h3>
             <input type='text' name='cap'>
             <br>
             <input type='submit' name='submitEntry' value='add'>
@@ -128,11 +128,11 @@ def writeToStory(storyID, imageLink, caption, genres, user):
     c.execute(f"""
         INSERT INTO stories VALUES (
             {storyID},
-            {title_get},
-            {imageLink},
-            {genres},
-            {caption},
-            {user}
+            \"{title_get}\",
+            \"{imageLink}\",
+            \"{genres}\",
+            \"{caption}\",
+            '{user}''
         );
     """)
     db.commit()
@@ -199,9 +199,9 @@ def logout():
 def add_story():
     if request.method == "POST":
         writeToStory(request.form['sID'], "TESTING", request.form['cap'], ["testing1", "testing2"], session['username'])
-        return render_template('login.html')
+        return render_template('response.html')
     html_AddToStories(session['username'])
-    return render_template('add.html')    
+    return render_template('add.html')
 
 @app.route('/new', methods=['GET', 'POST'])
 def new_story():
