@@ -30,11 +30,11 @@ CREATE TABLE IF NOT EXISTS stories (
 );
 """)
 
-# GLOBAL VARIABLES ---------------------------------------------
+# GLOBAL VARIABLES --------------------------------------------------------------------------------------
 
 global_storyid = int(0)
 
-# HELPER METHODS ------------------------------------------------
+# HELPER METHODS ----------------------------------------------------------------------------------------
 
 def authenticate(user, passw):
     c.execute(f"SELECT * FROM users WHERE username='{user}'")
@@ -50,7 +50,7 @@ def addUser(user, passw):
         c.execute("INSERT INTO users VALUES (?,?)", (user, passw))
         db.commit()
 
-# TEMPLATES --------------------------------------------------
+# TEMPLATES --------------------------------------------------------------------------------------------
 
 headingTemplate = """
     <!DOCTYPE html>
@@ -107,7 +107,7 @@ newForm = """
     </div>
 """
 
-# HTML BUILDING HELPER METHODS ----------------------------------------------
+# HTML BUILDING HELPER METHODS ---------------------------------------------------------------------------------
 
 def writeHTML(htmlTemplate, file):
     with open("templates/"+file, 'w') as f:
@@ -150,7 +150,7 @@ def writeNewStory(title_input, img_link, genre, cap, user_sesh):
     db.commit()
     global_storyid+=1
 
-# FLASK APP ROUTING ------------------------------------------------------------
+# FLASK APP ROUTING --------------------------------------------------------------------------------------
 
 @app.route("/", methods=['GET', 'POST'])
 def disp_loginpage():
@@ -209,7 +209,7 @@ def new_story():
     html_newStory(session['username'])
     return render_template('new.html')
 
-# RUNNING THIS! --------------------------------------------------------------------------------------
+# RUNNING THIS! -------------------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
     app.debug = True
