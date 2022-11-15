@@ -10,6 +10,7 @@ time spent:
 <html>
   <head>
     <title> LOGIN PAGE </title>
+    <link rel="stylesheet" type = "text/css" href="../static/login.css">
   </head>
 
   <body>
@@ -18,8 +19,8 @@ time spent:
     </h1>
     Made by Blue Haired Gals w/ Pronouns (Ziying Jian, Talia Hsia, Jasmine Yuen)
 
-    <div>
-      <h2>
+    <div class = "form">
+      <h2 id = "loghead">
         LOGIN HERE
       </h2>
       <h3>
@@ -34,14 +35,16 @@ time spent:
         <input type="text" name="passwordLog">
       <br>
       <br>
-        <input type="submit" name="sub1" value="Login">
+        <input type="submit" name="sub1" value="Login" id = "logbut">
       <h2>
         Don't have an account???
       </h2>
-        <button type="button"><a href="/register">REGISTER</a></button>
+        <button type="button" id = "regbut"><a href="/register">REGISTER</a></button>
       </form>
       <br>
-      {{loginMSG}}
+      <div id = "logmsg">
+        {{loginMSG}}
+      </div>
     </div>
 
   </body>
