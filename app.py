@@ -169,7 +169,7 @@ def writeNewStory(title_input, img_link, genre, cap, user_sesh):
 @app.route("/", methods=['GET', 'POST'])
 def disp_loginpage():
     if 'username' in session:
-        return render_template('landing.html', username=session['username'])
+        return render_template('landing.html', user=session['username'])
     return render_template('login.html')
 
 # LOGIN PAGE
@@ -180,7 +180,7 @@ def login():
         loginResult = authenticate(request.form['usernameLog'], request.form['passwordLog'])
         if loginResult==2:
             session['username'] = request.form['usernameLog']
-            return render_template('landing.html', username=session['username'])
+            return render_template('landing.html', user=session['username'])
         elif loginResult==0:
             return render_template('login.html', loginMSG="Bad username.")
         else:
@@ -218,7 +218,7 @@ def add_story():
             html_AddToStories(session['username'], "you have already added to this story and cannot add again")
         else:
             writeToStory(request.form['storyid_query'], "image", request.form['caption_query'], "genre", session['username'])
-            return render_template('landing.html', username=session['username'])
+            return render_template('landing.html', user=session['username'])
     else:
         html_AddToStories(session['username'], "")
     return render_template('add.html')
@@ -230,7 +230,7 @@ def new_story():
             html_newStory(session['username'], "please fill in both queries")
         else:
             writeNewStory(request.form['title_query'], "testing image", "testing genre", request.form['caption_query'], session['username'])
-            return render_template('landing.html')
+            return render_template('landing.html', user=session['username'])
     else:
         html_newStory(session['username'], "")
     return render_template('new.html')
