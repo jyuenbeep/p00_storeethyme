@@ -96,6 +96,7 @@ addingForm = """
             <input type='text' name='caption_query'>
             <br>
             <input type='submit' name='submitEntry' value='add'>
+            <br>
             {message}
         </form>
     </div>
@@ -112,6 +113,8 @@ newForm = """
             <input type='text' name='caption_query'>
             <br>
             <input type='submit' name='submitEntry' value='new'>
+            <br>
+            {message}
         </form>
     </div>
 """
@@ -127,8 +130,8 @@ def html_AddToStories(user, addingForm_message):
     this_html_template = headingTemplate.format(pageName="adding to story", username=user) + addingForm.format(message=addingForm_message) + endTemplate
     writeHTML(this_html_template, "add.html")
 
-def html_newStory(user):
-    this_html_template = headingTemplate.format(pageName="creating new story", username=user) + newForm + endTemplate
+def html_newStory(user, newForm_message):
+    this_html_template = headingTemplate.format(pageName="creating new story", username=user) + newForm.format(message=newForm_message) + endTemplate
     writeHTML(this_html_template, "new.html")
 
 def writeToStory(id_input, img_link, genre, cap, user_sesh):
@@ -223,9 +226,13 @@ def add_story():
 @app.route('/new', methods=['GET', 'POST'])
 def new_story():
     if request.method == "POST":
-        writeNewStory(request.form['title_query'], "testing image", "testing genre", request.form['caption_query'], session['username'])
-        return render_template('landing.html')
-    html_newStory(session['username'])
+        if request.form['title_query']=="" or request.form['caption_query']=="":
+            html_newStory(session['username'], "please fill in both queries")
+        else:
+            writeNewStory(request.form['title_query'], "testing image", "testing genre", request.form['caption_query'], session['username'])
+            return render_template('landing.html')
+    else:
+        html_newStory(session['username'], "")
     return render_template('new.html')
 
 # RUNNING THIS! -------------------------------------------------------------------------------------------------
