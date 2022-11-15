@@ -94,3 +94,5 @@ readme and devlog updates
 taliaH -- 2022-11-15 5:08
 more readme updates
 
+taliaH -- 2022-11-15 5:41
+css code additions + some edits
