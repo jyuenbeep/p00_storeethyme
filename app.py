@@ -82,10 +82,10 @@ addingForm = """
         <h2> ADD TO THIS STORY! </h2>
         <form action="/add" method="POST">
             <h3> Which story? </h3>
-            <input type='text' name='sID'>
+            <input type='text' name='storyid_query'>
             <br>
             <h3> Make a caption: </h3>
-            <input type='text' name='cap'>
+            <input type='text' name='caption_query'>
             <br>
             <input type='submit' name='submitEntry' value='add'>
         </form>
@@ -122,17 +122,17 @@ def html_newStory(user):
     this_html_template = headingTemplate.format(pageName="creating new story", username=user) + newForm + endTemplate
     writeHTML(this_html_template, "new.html")
 
-def writeToStory(storyID, imageLink, caption, genres, user):
-    c.execute("SELECT title FROM stories WHERE id=\"{storyID}\"")
-    title_get = c.fetchall()
+def writeToStory(id_input, img_link, genre, cap, user_sesh):
+    c.execute(f"SELECT title FROM stories WHERE story_id={id_input}")
+    title_get = c.fetchone()
     c.execute(f"""
         INSERT INTO stories VALUES (
-            {storyID},
-            \"{title_get}\",
-            \"{imageLink}\",
-            \"{genres}\",
-            \"{caption}\",
-            '{user}''
+            {id_input},
+            \"{title_get[0]}\",
+            \"{img_link}\",
+            \"{genre}\",
+            \"{cap}\",
+            '{user_sesh}'
         );
     """)
     db.commit()
@@ -150,7 +150,7 @@ def writeNewStory(title_input, img_link, genre, cap, user_sesh):
         )
     """)
     db.commit()
-    #global_storyid+=1
+    global_storyid+=1
 
 # FLASK APP ROUTING --------------------------------------------------------------------------------------
 
@@ -198,7 +198,7 @@ def logout():
 @app.route('/add', methods=['GET', 'POST'])
 def add_story():
     if request.method == "POST":
-        writeToStory(request.form['sID'], "TESTING", request.form['cap'], ["testing1", "testing2"], session['username'])
+        writeToStory(request.form['storyid_query'], "image", request.form['caption_query'], "genre", session['username'])
         return render_template('response.html')
     html_AddToStories(session['username'])
     return render_template('add.html')
