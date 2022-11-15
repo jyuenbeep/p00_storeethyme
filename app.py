@@ -21,11 +21,11 @@ CREATE TABLE IF NOT EXISTS users (
 
 c.execute("""
 CREATE TABLE IF NOT EXISTS stories (
-    id INTEGER, 
+    story_id STRING, 
     title STRING, 
     thumbnail STRING, 
     genres STRING, 
-    caption STRING
+    caption STRING,
     user STRING
 );
 """)
@@ -141,16 +141,16 @@ def writeNewStory(title_input, img_link, genre, cap, user_sesh):
     global global_storyid
     c.execute(f"""
         INSERT INTO stories VALUES (
-            \"{global_storyid}\", 
-            \"{title_input}\", 
-            \"{img_link}\", 
-            \"{genre}\", 
-            \"{cap}\", 
-            \"{user_sesh}\"
+            {global_storyid}, 
+            '{title_input}', 
+            {img_link}, 
+            {genre}, 
+            '{cap}', 
+            {user_sesh}
             );
         """)
     db.commit()
-    global_storyid+=1
+    #global_storyid+=1
 
 # FLASK APP ROUTING --------------------------------------------------------------------------------------
 
