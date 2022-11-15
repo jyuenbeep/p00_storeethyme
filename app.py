@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 c.execute("""
 CREATE TABLE IF NOT EXISTS stories (
-    story_id STRING, 
+    story_id INTEGER, 
     title STRING, 
     thumbnail STRING, 
     genres STRING, 
@@ -141,14 +141,14 @@ def writeNewStory(title_input, img_link, genre, cap, user_sesh):
     global global_storyid
     c.execute(f"""
         INSERT INTO stories VALUES (
-            {global_storyid}, 
-            '{title_input}', 
-            {img_link}, 
-            {genre}, 
-            '{cap}', 
+            {global_storyid},
+            \"{title_input}\",
+            \"{img_link}\",
+            \"{genre}\",
+            \"{cap}\",
             {user_sesh}
-            );
-        """)
+        )
+    """)
     db.commit()
     #global_storyid+=1
 
