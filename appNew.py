@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS stories (
     thumbnail STRING, 
     genres STRING, 
     caption STRING
-    userUpdate STRING
+    user STRING
 );
 """)
 
@@ -146,22 +146,22 @@ def writeToStory(storyID, imageLink, caption, genres, user):
             {imageLink},
             {genres},
             {caption},
-            {userUpdate}
+            {user}
         );
     """)
     db.commit()
 
-def writeNewStory(title, genres, thumbnail, caption, user):
+def writeNewStory(title, genres, thumbnail, caption, user_sesh):
     global global_storyid
     #print(c.execute("SELECT * FROM stories"))
     c.execute(f"""
-        INSERT INTO stories (id, title, thumbnail, genres, caption, userUpdate) VALUES (
+        INSERT INTO stories (id, title, thumbnail, genres, caption, user) VALUES (
             {global_storyid}, 
             {title}, 
             {thumbnail}, 
             {genres}, 
             {caption}, 
-            {user}
+            {user_sesh}
             );
         """)
     db.commit()
