@@ -57,6 +57,7 @@ headingTemplate = """
     <html>
     <head>
     <title> {pageName} </title>
+    <link rel="stylesheet" type = "text/css" href="../static/{pageName}.css">
     </head>
 
     <body>
