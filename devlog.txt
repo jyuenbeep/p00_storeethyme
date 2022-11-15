@@ -1,11 +1,88 @@
 Blue Haired Girls with Pronouns :: Ziying Jian, Jasmine Yuen, Talia Hsia
 SoftDev
 P00
+*PLEASE NOTE: a number of these were done in group sessions (virtual or in person) with 
+one person driving hence why there are larger chunks of progress*
+
+jasmineY -- 2022-11-2 TIME
+added design doc
 
 ziyingJ -- 2022-11-2 12:49
 Completed components visualization on design doc
 
+taliaH -- 2022-11-3 TIME
+revisions on design doc with updates from code
+
 ziyingJ -- 2022-11-4 7:03
 Completed all revisions on the design doc
 
+jasmineY -- 2022-11-9 TIME
+make register base code
 
+taliaH -- 2022-11-10 TIME
+updated readme and tested
+
+taliaH -- 2022-11-10 TIME
+wrote register flask code and update html form (only POST methods)
+
+jasmineY -- 2022-11-12 TIME
+SQL additions (eliminated hardcoding)
+
+jasmineY -- 2022-11-13 TIME
+login and register debugging
+
+taliaH -- 2022-11-13 TIME
+created and wrote html pages for rest of pages with form inputs
+
+jasmineY -- 2022-11-14 TIME
+changed html writing process to flask for updates + added helper methods
+
+jasmineY -- 2022-11-14 TIME
+tried adding nested SQL tables
+
+jasmineY -- 2022-11-14 TIME
+updated method with a global variable
+
+taliaH -- 2022-11-14 5pm
+debugging flask (risson error)
+
+jasmineY -- 2022-11-14 8pm
+debugging flask (risson error)
+
+jasmineY -- 2022-11-14 9pm
+debugging flask (risson error)
+
+jasmineY -- 2022-11-14 9pm
+debugging flask (risson error)
+
+ziyingJ -- 2022-11-14 10pm
+html docs updates with flask updates
+
+ziyingJ -- 2022-11-14 11pm
+cullin unecessary code
+
+ziyingJ -- 2022-11-14 11pm
+creating list for stories display page
+
+ziyingJ -- 2022-11-14 11pm
+landing page updates
+
+jasmineY -- 2022-11-14 11pm
+updated html connection to flask app
+
+ziyingJ -- 2022-11-14 11pm
+delete login
+
+jasmineY -- 2022-11-15 1am
+making thumbnail work
+
+ziyingJ -- 2022-11-15 1am
+revisions html and flask
+
+jasmineY -- 2022-11-15 1am
+file upload
+
+ziyingJ -- 2022-11-15 2am
+file upload
+
+talia
