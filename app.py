@@ -50,6 +50,11 @@ def addUser(user, passw):
         c.execute("INSERT INTO users VALUES (?,?)", (user, passw))
         db.commit()
 
+def story_unadded_to(user, storyid):
+    c.execute(f"SELECT * FROM stories WHERE story_id={storyid} AND user='{user}'")
+    output = c.fetchall()
+    return (len(output)==0)
+
 # TEMPLATES --------------------------------------------------------------------------------------------
 
 headingTemplate = """
@@ -88,6 +93,7 @@ addingForm = """
             <input type='text' name='caption_query'>
             <br>
             <input type='submit' name='submitEntry' value='add'>
+            {message}
         </form>
     </div>
 """
@@ -114,8 +120,8 @@ def writeHTML(htmlTemplate, file):
         f.write(htmlTemplate)
     f.close()
 
-def html_AddToStories(user):
-    this_html_template = headingTemplate.format(pageName="adding to story", username=user) + addingForm + endTemplate
+def html_AddToStories(user, addingForm_message):
+    this_html_template = headingTemplate.format(pageName="adding to story", username=user) + addingForm.format(message=addingForm_message) + endTemplate
     writeHTML(this_html_template, "add.html")
 
 def html_newStory(user):
@@ -198,9 +204,14 @@ def logout():
 @app.route('/add', methods=['GET', 'POST'])
 def add_story():
     if request.method == "POST":
-        writeToStory(request.form['storyid_query'], "image", request.form['caption_query'], "genre", session['username'])
-        return render_template('response.html')
-    html_AddToStories(session['username'])
+        if story_unadded_to(session['username'], request.form['storyid_query']):
+            writeToStory(request.form['storyid_query'], "image", request.form['caption_query'], "genre", session['username'])
+            return render_template('response.html')
+
+        html_AddToStories(session['username'], "you have already added to this story and cannot add again")
+        return render_template('add.html')
+
+    html_AddToStories(session['username'], "")
     return render_template('add.html')
 
 @app.route('/new', methods=['GET', 'POST'])
