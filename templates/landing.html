@@ -6,23 +6,27 @@
 
   <body>
     <h1>
-      STOREETHYME - Create and add to stories!
+      STOREETHYME - Collaborative storytelling!
     </h1>
     Made by Blue Haired Gals w/ Pronouns (Ziying Jian, Talia Hsia, Jasmine Yuen)
+    <br>
+    <br>
     <div>
+      <div class = #navabar>
+        <a href="/login">Profile</a>
+        <a href="/add">Add to an existing story!</a>
+        <a href="/new">Create a new story!</a>
+      </div>
       <h2>
         WELCOME, {{user}}!
       </h2>
       <h3>
         The stories you have already added to:
       </h3>
+      <form action='/logout' method = "POST">
+      <button type="submit">Logout</button>
+  </form>
     </div>
-    <form action='/logout' method = "POST">
-        <button type="submit">Logout</button>
-    </form>
-    <br>
-    <button><a href="/add">ADD TO STORY</a></button>
-    <button><a href="/new">NEW STORY</a></button>
   </body>
 
 </html>

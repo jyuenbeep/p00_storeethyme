@@ -68,32 +68,36 @@ headingTemplate = """
     </head>
 
     <body>
-        <h1>
-         STOREETHYME {pageName}
-        </h1>
         Made by Blue Haired Gals w/ Pronouns (Ziying Jian, Talia Hsia, Jasmine Yuen)
 
         <div>
-        <h2>
-            WELCOME {username}
-        </h2>
+        <h1>
+            WELCOME, {username}!
+        </h1>
         </div>
     """
 
 endTemplate = """
+<br>
+<div class = #navabar>
+<a href="/">Profile</a>
+<a href="/add">Add to an existing story!</a>
+<a href="/new">Create a new story!</a>
+</div>
     </body>
     </html>
     """
 
 addingForm = """
     <div>
-        <h2> ADD TO THIS STORY! </h2>
+        <h2> ADD TO A STORY! </h2>
         <form action="/add" method="POST">
-            <h3> Which story? </h3>
+            <h3> Provide the story's unique story ID: </h3>
             <input type='text' name='storyid_query'>
             <br>
-            <h3> Make a caption: </h3>
+            <h3> Input your awesome one-liner: </h3>
             <input type='text' name='caption_query'>
+            <br>
             <br>
             <input type='submit' name='submitEntry' value='add'>
             <br>
@@ -106,11 +110,12 @@ newForm = """
     <div>
         <h2> CREATE A NEW STORY! </h2>
         <form action="/new" method="POST">
-            <h3> title </h3>
+            <h3> Input your *dazzling* title: </h3>
             <input type='text' name='title_query'>
             <br>
-            <h3> make a caption: </h3>
-            <input type='text' name='caption_query'>
+            <h3> Enter your awesome one-liner to start off: </h3>
+            <input type='paragraph' name='caption_query'>
+            <br>
             <br>
             <input type='submit' name='submitEntry' value='new'>
             <br>
@@ -127,11 +132,11 @@ def writeHTML(htmlTemplate, file):
     f.close()
 
 def html_AddToStories(user, addingForm_message):
-    this_html_template = headingTemplate.format(pageName="adding to story", username=user) + addingForm.format(message=addingForm_message) + endTemplate
+    this_html_template = headingTemplate.format(pageName="Add on to a story!", username=user) + addingForm.format(message=addingForm_message) + endTemplate
     writeHTML(this_html_template, "add.html")
 
 def html_newStory(user, newForm_message):
-    this_html_template = headingTemplate.format(pageName="creating new story", username=user) + newForm.format(message=newForm_message) + endTemplate
+    this_html_template = headingTemplate.format(pageName="Create a new story!", username=user) + newForm.format(message=newForm_message) + endTemplate
     writeHTML(this_html_template, "new.html")
 
 def writeToStory(id_input, img_link, genre, cap, user_sesh):
