@@ -11,7 +11,7 @@ Required installments:
 - Flask
 - sqlite
 
-Remotely:
+Launch Remotely:
 - Clone repo in terminal
 `~git clone [https/ssh key]`
 
