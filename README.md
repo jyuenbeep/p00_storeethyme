@@ -19,4 +19,4 @@ Launch Remotely:
 `~cd p00_storeethyme`
 
 - Run the flask app via 
-`~python3 app.py`
+`~python3 __init__.py`
