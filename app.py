@@ -139,12 +139,12 @@ def writeNewStory(title_input, img_link, genre, cap, user_sesh):
     global global_storyid
     c.execute(f"""
         INSERT INTO stories VALUES (
-            {global_storyid}, 
-            '{title_input}', 
-            {img_link}, 
-            {genre}, 
-            '{cap}', 
-            '{user_sesh}'
+            \"{global_storyid}\", 
+            \"{title_input}\", 
+            \"{img_link}\", 
+            \"{genre}\", 
+            \"{cap}\", 
+            \"{user_sesh}\"
             );
         """)
     db.commit()
