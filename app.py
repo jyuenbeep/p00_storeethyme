@@ -123,10 +123,12 @@ def html_newStory(user):
     writeHTML(this_html_template, "new.html")
 
 def writeToStory(storyID, imageLink, caption, genres, user):
+    c.execute("SELECT title FROM stories WHERE id=\"{storyID}\"")
+    title_get = c.fetchall()
     c.execute(f"""
         INSERT INTO stories VALUES (
             {storyID},
-            SELECT title FROM stories WHERE id={storyID},
+            {title_get},
             {imageLink},
             {genres},
             {caption},
