@@ -4,85 +4,89 @@ P00
 *PLEASE NOTE: a number of these were done in group sessions (virtual or in person) with 
 one person driving hence why there are larger chunks of progress*
 
-jasmineY -- 2022-11-2 TIME
+jasmineY -- 2022-11-2 12:46
 added design doc
 
 ziyingJ -- 2022-11-2 12:49
 Completed components visualization on design doc
 
-taliaH -- 2022-11-3 TIME
+taliaH -- 2022-11-3 4:37
 revisions on design doc with updates from code
 
 ziyingJ -- 2022-11-4 7:03
 Completed all revisions on the design doc
 
-jasmineY -- 2022-11-9 TIME
+jasmineY -- 2022-11-9 10:34
 make register base code
 
-taliaH -- 2022-11-10 TIME
+taliaH -- 2022-11-10 4:58
 updated readme and tested
 
-taliaH -- 2022-11-10 TIME
+taliaH -- 2022-11-10 9:24
 wrote register flask code and update html form (only POST methods)
 
-jasmineY -- 2022-11-12 TIME
+jasmineY -- 2022-11-12 11:04
 SQL additions (eliminated hardcoding)
 
-jasmineY -- 2022-11-13 TIME
+jasmineY -- 2022-11-13 10:32
 login and register debugging
 
-taliaH -- 2022-11-13 TIME
+taliaH -- 2022-11-13 1:26
 created and wrote html pages for rest of pages with form inputs
 
-jasmineY -- 2022-11-14 TIME
+jasmineY -- 2022-11-14 4:15
 changed html writing process to flask for updates + added helper methods
 
-jasmineY -- 2022-11-14 TIME
+jasmineY -- 2022-11-14 4:23
 tried adding nested SQL tables
 
-jasmineY -- 2022-11-14 TIME
+jasmineY -- 2022-11-14 4:40
 updated method with a global variable
 
-taliaH -- 2022-11-14 5pm
+taliaH -- 2022-11-14 5:35
 debugging flask (risson error)
 
-jasmineY -- 2022-11-14 8pm
+jasmineY -- 2022-11-14 8:34
 debugging flask (risson error)
 
-jasmineY -- 2022-11-14 9pm
+jasmineY -- 2022-11-14 9:20
 debugging flask (risson error)
 
-jasmineY -- 2022-11-14 9pm
+jasmineY -- 2022-11-14 9:25
 debugging flask (risson error)
 
-ziyingJ -- 2022-11-14 10pm
+ziyingJ -- 2022-11-14 10:45
 html docs updates with flask updates
 
-ziyingJ -- 2022-11-14 11pm
+ziyingJ -- 2022-11-14 11:25
 cullin unecessary code
 
-ziyingJ -- 2022-11-14 11pm
+ziyingJ -- 2022-11-14 11:27
 creating list for stories display page
 
-ziyingJ -- 2022-11-14 11pm
+ziyingJ -- 2022-11-14 11:32
 landing page updates
 
-jasmineY -- 2022-11-14 11pm
+jasmineY -- 2022-11-14 11:38
 updated html connection to flask app
 
-ziyingJ -- 2022-11-14 11pm
+ziyingJ -- 2022-11-14 11:49
 delete login
 
-jasmineY -- 2022-11-15 1am
+jasmineY -- 2022-11-15 1:30
 making thumbnail work
 
-ziyingJ -- 2022-11-15 1am
+ziyingJ -- 2022-11-15 1:43
 revisions html and flask
 
-jasmineY -- 2022-11-15 1am
+jasmineY -- 2022-11-15 1:54
 file upload
 
-ziyingJ -- 2022-11-15 2am
+ziyingJ -- 2022-11-15 2:27
 file upload
 
-talia
+taliaH -- 2022-11-15 4:40
+flask updates + debugging (db disk image malformed)
+
+taliaH -- 2022-11-15 5:08
+readme and devlog updates
