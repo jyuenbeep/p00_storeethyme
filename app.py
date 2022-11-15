@@ -146,7 +146,7 @@ def writeNewStory(title_input, img_link, genre, cap, user_sesh):
             \"{img_link}\",
             \"{genre}\",
             \"{cap}\",
-            {user_sesh}
+            '{user_sesh}'
         )
     """)
     db.commit()
@@ -207,7 +207,7 @@ def add_story():
 def new_story():
     if request.method == "POST":
         writeNewStory(request.form['title_query'], "testing image", "testing genre", request.form['caption_query'], session['username'])
-        return render_template('login.html')
+        return render_template('response.html')
     html_newStory(session['username'])
     return render_template('new.html')
 
