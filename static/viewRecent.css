@@ -1,16 +1,23 @@
-.html{
-    font-family: sans-serif;
-}
 
-.body{
+
+body{
     background-color: #b6dec1;
+    font-family: monospace;
+    text-align: center;
 }
 
-#button{
-    background-color: #368a4e;
+.button{
+    background-color: #B8B3E9;
+    border: 0px solid;
+    flex: content;
+    font-size: large;
+    font-family: monospace;
+
 }
 
-a:visited a:hover {
-    text-decoration: none;
+.button:hover
+{
+  background-color: #55505C;
+  color:bisque;
 }
 

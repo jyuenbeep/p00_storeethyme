@@ -158,12 +158,13 @@ view_recent = """
     <html>
     <head>
     <title> {storyid} recent update </title>
+    <link rel="stylesheet" type = "text/css" href="../static/viewRecent.css">
     </head>
     <body>
         <h1>STORY ID: {storyid}</h1>
         <h1>TITLE: {title}</h1>
         <h2>{caption}</h2>
-        <button><a href="/add">go back</a></button>
+        <button class = "button"><a href="/add">go back</a></button>
     </body>
     </html>
 """
@@ -278,6 +279,7 @@ def login():
         loginResult = authenticate(request.form['usernameLog'], request.form['passwordLog'])
         if loginResult==2:
             session['username'] = request.form['usernameLog']
+            html_viewStories(session['username'])
             return render_template('landing.html', user=session['username'])
         elif loginResult==0:
             return render_template('login.html', loginMSG="Bad username.")
