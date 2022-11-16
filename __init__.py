@@ -179,6 +179,7 @@ def html_AddToStories(user, addingForm_message, addingMessage2):
     this_html_template = headingTemplate.format(pageName="add", username=user)
 
     html_string = """
+        <h2>Stories List</h2>
         <table class = "table">
             <tr>
                 <th>ID</th>

@@ -66,3 +66,24 @@ a:visited a:hover {
   background-color: #55505C;
   color:bisque;
 }
+
+.table{
+    font-family: monospace;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    
+}
+tr{
+    display: flex;
+    justify-content: space-around;
+    flex-grow: 5;
+    margin: 10px;
+}
+
+th{
+    padding:5px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
