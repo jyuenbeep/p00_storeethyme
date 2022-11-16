@@ -46,11 +46,23 @@ div {
 .table{
     font-family: monospace;
     text-align: center;
-    padding-left:10px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
     
 }
 tr{
-    padding-left:10px;
+    display: flex;
+    justify-content: space-around;
+    flex-grow: 5;
+    margin: 10px;
+}
+
+th{
+    padding:5px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .button{
