@@ -102,7 +102,7 @@ addingForm = """
             <h3> Genre??? </h3>
             <input type='text' name='genre_query'>
             <br>
-            <input type='submit' name='submitEntry' value='add'>
+            <input type='submit' name='submitEntry' value='add' class = "button">
             <br>
             {message}
         </form>
@@ -147,8 +147,8 @@ landingPage_skeleton = """
     The stories you have already added to:
     </h3>
     {viewStories_code}
-    <form action='/logout' method = "POST" class = "button">
-        <button type="submit">Logout</button>
+    <form action='/logout' method = "POST">
+        <button type="submit" class = "button">Logout</button>
     </form>
 </div>
 """
@@ -179,7 +179,7 @@ def html_AddToStories(user, addingForm_message, addingMessage2):
     this_html_template = headingTemplate.format(pageName="add", username=user)
 
     html_string = """
-        <table>
+        <table class = "table">
             <tr>
                 <th>ID</th>
                 <th>TITLE</th>
@@ -205,7 +205,7 @@ def html_newStory(user, newForm_message):
 
 def html_viewStories(user):
     html_string = """
-        <table>
+        <table class = "table">
             <tr>
                 <th>ID</th>
                 <th>TITLE</th>

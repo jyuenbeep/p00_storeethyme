@@ -1,32 +1,69 @@
-.html{
-
+.landing{
+    font-family: monospace;
+    text-align: center;
 }
 
-.body{
+body{
     background-color: #b6dec1;
 }
 
 .header{
-    font-family: sans-serif;
+    font-family: monospace;
 }
 
-#navabar{
-    font-family: sans-serif;
+.navabar{
+    display:flex;
+    justify-content: space-between;
+    padding-left: 20vh;
+    padding-right: 20vh;
+    background-color: #334195;
+    font-size: large;
 }
 
-.table{
-    font-family: sans-serif;
+.navabar > a{
+    color: beige;
+    text-decoration: none;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
-.h2{
-    font-family: sans-serif;
+.navabar > a:hover{
+    color:#F7C548;
+    background-color: black;
 }
 
-.h3{
-    font-family: sans-serif;
+div {
+    align-items: center;
+    text-align: center;
 }
 
 .navabar > a:visited{
     text-decoration: none;
 }
 
+.table{
+    font-family: monospace;
+    text-align: center;
+    padding-left:10px;
+    
+}
+tr{
+    padding-left:10px;
+}
+
+.button{
+    background-color: #B8B3E9;
+    border: 0px solid;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.button:hover
+{
+  background-color: #55505C;
+  color:bisque;
+}

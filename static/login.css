@@ -1,29 +1,41 @@
-.html{
-    background-color: #33d160;
+.login{
+    background-color: #b6dec1;
+    font-family: monospace;
+    text-align: center;
 }
 
-.login{
-    background-color: #33d160;
+h1{
+    text-align: center;
 }
 
 .form{
-    font-family: sans-serif;
+    font-family: monospace;
+    
 }
 
 #loghead{
-    font-family: sans-serif;
+    font-family: monospace;
+    padding-top: 20px;
 }
 
-#logbut{
-    background-color: #368a4e;
+
+.button{
+    background-color: #B8B3E9;
+    border: 0px solid;
+    flex: content;
+    font-size: large;
+    font-family: monospace;
+
 }
 
-#regbut{
-    background-color: #368a4e;
+.button:hover
+{
+  background-color: #55505C;
+  color:bisque;
 }
 
 #logmsg{
-    font-family: sans-serif;
+    padding-left: 10px;
 }
 
 a:visited a:hover {

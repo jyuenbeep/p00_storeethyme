@@ -1,37 +1,41 @@
-.html{
-    font-family: sans-serif;
+.register{
+    background-color: #b6dec1;
+    font-family: monospace;
+    text-align: center;
 }
 
-.body{
-    background-color: #b6dec1;
+h1{
+    text-align: center;
 }
 
 .form{
-    font-family: sans-serif;
-}
-
-.h1{
-    font-family: sans-serif;
-}
-
-.h2{
-    font-family: sans-serif;
-}
-
-.h3{
-    font-family: sans-serif;
+    font-family: monospace;
+    
 }
 
 #loghead{
-    font-family: sans-serif;
+    font-family: monospace;
+    padding-top: 20px;
 }
 
-#regbut{
-    font-family: sans-serif;
+
+.button{
+    background-color: #B8B3E9;
+    border: 0px solid;
+    flex: content;
+    font-size: large;
+    font-family: monospace;
+
+}
+
+.button:hover
+{
+  background-color: #55505C;
+  color:bisque;
 }
 
 #logmsg{
-    font-family: sans-serif;
+    padding-left: 10px;
 }
 
 a:visited a:hover {

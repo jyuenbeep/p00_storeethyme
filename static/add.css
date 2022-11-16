@@ -1,30 +1,50 @@
-.html{
-
+.add{
+    font-family: monospace;
+    text-align: center;
 }
 
-.body{
+body{
     background-color: #b6dec1;
 }
 
 .header{
-    font-family: sans-serif;
+    font-family: monospace;
 }
 
-#navabar{
+.navabar{
+    display:flex;
+    justify-content: space-between;
+    padding-left: 20vh;
+    padding-right: 20vh;
+    background-color: #334195;
+    font-size: large;
+}
 
-    font-family: sans-serif;
+.navabar > a{
+    color: beige;
+    text-decoration: none;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.navabar > a:hover{
+    color:#F7C548;
+    background-color: black;
 }
 
 .form{
     font-family: sans-serif;
 }
 
-.h2{
-    font-family: sans-serif;
+div {
+    align-items: center;
+    text-align: center;
 }
 
-.h3{
-    font-family: sans-serif;
+input {
+    height: 40px;
+    width: 70vh;
 }
 
 a:visited a:hover {
@@ -32,3 +52,17 @@ a:visited a:hover {
 }
 
 
+.button{
+    background-color: #B8B3E9;
+    border: 0px solid;
+    flex: content;
+    font-size: large;
+    font-family: monospace;
+
+}
+
+.button:hover
+{
+  background-color: #55505C;
+  color:bisque;
+}
