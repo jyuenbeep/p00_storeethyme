@@ -317,7 +317,7 @@ def add_story():
         elif story_unadded_to(session['username'], request.form['storyid_query'])==1:
             html_AddToStories(session['username'], "you have already added to this story and cannot add again", "")
         else:
-            writeToStory(request.form['storyid_query'], request.form['genre_query'], request.form['cap_query'], session['username'])
+            writeToStory(request.form['storyid_query'], request.form['genre_query'], request.form['caption_query'], session['username'])
             return render_template('landing.html', user=session['username'])
     else:
         html_AddToStories(session['username'], "", "")
